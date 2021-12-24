@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"go-gin-seed/models"
 	"go-gin-seed/pkg/logger"
 	"go-gin-seed/pkg/setting"
@@ -33,6 +32,6 @@ func main() {
 		WriteTimeout:   writeTimeout,
 		MaxHeaderBytes: maxHeaderBytes,
 	}
-	logrus.Info("run server port:{}", endPoint)
+	logger.Info("run server port:%s", endPoint)
 	server.ListenAndServe()
 }

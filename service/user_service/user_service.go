@@ -3,11 +3,11 @@ package user_service
 import (
 	"go-gin-seed/models"
 	"go-gin-seed/pkg/e"
-	v1 "go-gin-seed/routers/api/v1"
+	"go-gin-seed/routers/request"
 )
 
-// Login
-func Login(form v1.LoginForm) int {
+// user login
+func Login(form request.LoginForm) int {
 	user := models.User{
 		UserName: form.LoginName,
 		Password: form.Password,

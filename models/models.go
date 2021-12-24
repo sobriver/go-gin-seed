@@ -3,7 +3,8 @@ package models
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/sirupsen/logrus"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"go-gin-seed/pkg/logger"
 	"go-gin-seed/pkg/setting"
 	"time"
 )
@@ -26,8 +27,9 @@ func Init() {
 		setting.DatabaseSetting.Name))
 
 	if err != nil {
-		logrus.Error("connect db error:{}", err)
+		logger.Error("connect db error:%s", err)
 	}
+	logger.Info("connect db success %s", setting.DatabaseSetting.Type)
 
 	db.SingularTable(true)
 	db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)

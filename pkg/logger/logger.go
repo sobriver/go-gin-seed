@@ -5,16 +5,36 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"go-gin-seed/pkg/setting"
+	"io"
 	"os"
 	"time"
 )
 
 var Log = logrus.New()
 
-func Init() {
-	Log.Formatter = &logrus.JSONFormatter{
-		TimestampFormat: "2006-01-02 15:04:05",
+func Debug(format string, args ...interface{}) {
+	if args == nil {
+		Log.Debug(format)
+	} else {
+		Log.Debugf(format, args)
 	}
+}
+func Info(format string, args ...interface{}) {
+	Log.Infof(format, args)
+}
+func Warn(format string, args ...interface{}) {
+	Log.Warnf(format, args)
+}
+func Error(format string, args ...interface{}) {
+	Log.Errorf(format, args)
+}
+func Fatal(format string, args ...interface{}) {
+	Log.Fatalf(format, args)
+}
+
+func Init() {
+	Log.SetFormatter(&logrus.TextFormatter{TimestampFormat: "2021-01-01 12:30:30.999"})
+	Log.SetOutput(os.Stdout)
 	logName := setting.AppSetting.LogPathFile
 	var f *os.File
 	var err error
@@ -27,8 +47,12 @@ func Init() {
 	if err != nil {
 		fmt.Println("open log file failed")
 	}
-
-	Log.Out = f
+	writers := []io.Writer{
+		f,
+		os.Stdout}
+	//同时写文件和屏幕
+	fileAndStdoutWriter := io.MultiWriter(writers...)
+	Log.SetOutput(fileAndStdoutWriter)
 	switch setting.AppSetting.LogLevel {
 	case "trace":
 		Log.Level = logrus.TraceLevel

@@ -49,6 +49,7 @@ func Init() {
 
 	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
 	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
+
 }
 
 // mapTo map section
@@ -57,4 +58,5 @@ func mapTo(section string, v interface{}) {
 	if err != nil {
 		fmt.Printf("Cfg.MapTo %s err: %v\n", section, err)
 	}
+	fmt.Printf("%s setting:%v\n", section, v)
 }

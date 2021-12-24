@@ -2,8 +2,8 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/sirupsen/logrus"
 	"go-gin-seed/pkg/e"
+	"go-gin-seed/pkg/logger"
 )
 
 type User struct {
@@ -20,7 +20,7 @@ func (u *User) SelectByAuth() (*User, int) {
 		return nil, e.PWD_NOT_MATCH
 	}
 	if err != nil {
-		logrus.Error("select auth fail:{}", err)
+		logger.Error("select auth fail:%s", err)
 		return nil, e.FAILURE
 	}
 	return &user, e.SUCCESS

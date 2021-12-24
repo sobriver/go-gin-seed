@@ -4,27 +4,30 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-gin-seed/pkg/app"
 	"go-gin-seed/pkg/e"
+	"go-gin-seed/pkg/logger"
+	"go-gin-seed/routers/request"
+	"go-gin-seed/service/user_service"
 )
 
-type LoginForm struct {
-	LoginName string `form:"loginName" valid:"Required;Max(100)"`
-	Password  string `form:"password" valid:"Required;Max(100)"`
-}
-
-// Login /*
+// user login
 func Login(c *gin.Context) {
-	//check param
 	var (
 		appG = app.Gin{C: c}
-		form LoginForm
+		form request.LoginForm
 	)
+	logger.Info("user login form:%v", form)
+	//check param
 	errCode := app.BindAndValid(c, &form)
 	if errCode != e.SUCCESS {
-		appG.Response(errCode, e.GetMsg(errCode))
+		appG.Response(errCode, nil)
 		return
 	}
 	//exec service
-
+	errCode = user_service.Login(form)
+	if errCode != e.SUCCESS {
+		appG.Response(errCode, nil)
+		return
+	}
 	//return success response
 	appG.Response(e.SUCCESS, nil)
 
