@@ -13,15 +13,15 @@ import (
 func Login(c *gin.Context) {
 	var (
 		appG = app.Gin{C: c}
-		form request.LoginForm
+		form request.LoginRequest
 	)
-	logger.Info("user login form:%v", form)
 	//check param
 	errCode := app.BindAndValid(c, &form)
 	if errCode != e.SUCCESS {
 		appG.Response(errCode, nil)
 		return
 	}
+	logger.Info("user loginName:%s", form.LoginName)
 	//exec service
 	errCode = user_service.Login(form)
 	if errCode != e.SUCCESS {
@@ -30,5 +30,5 @@ func Login(c *gin.Context) {
 	}
 	//return success response
 	appG.Response(e.SUCCESS, nil)
-
+	logger.Info("login success")
 }

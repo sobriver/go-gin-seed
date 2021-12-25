@@ -40,7 +40,8 @@ func Init() {
 	var err error
 	cfg, err = ini.Load("conf/app.ini")
 	if err != nil {
-		fmt.Printf("parse app.ini error': %v\n", err)
+		fmt.Println("parse app.ini error")
+		panic(err)
 	}
 
 	mapTo("app", AppSetting)
@@ -56,7 +57,8 @@ func Init() {
 func mapTo(section string, v interface{}) {
 	err := cfg.Section(section).MapTo(v)
 	if err != nil {
-		fmt.Printf("Cfg.MapTo %s err: %v\n", section, err)
+		fmt.Println("cfg section err")
+		panic(err)
 	}
 	fmt.Printf("%s setting:%v\n", section, v)
 }

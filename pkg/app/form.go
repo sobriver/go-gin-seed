@@ -3,7 +3,6 @@ package app
 import (
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"go-gin-seed/pkg/e"
 	"go-gin-seed/pkg/logger"
 )
@@ -32,7 +31,7 @@ func BindAndValid(c *gin.Context, form interface{}) int {
 
 func MarkErrors(errors []*validation.Error) {
 	for _, err := range errors {
-		logrus.Error(err.Key, err.Message)
+		logger.Error(err.Key, err.Message)
 	}
 	return
 }

@@ -27,7 +27,7 @@ func Init() {
 		setting.DatabaseSetting.Name))
 
 	if err != nil {
-		logger.Error("connect db error:%s", err)
+		logger.Panic("connect db error:%s", err)
 	}
 	logger.Info("connect db success %s", setting.DatabaseSetting.Type)
 

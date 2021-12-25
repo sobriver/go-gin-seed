@@ -7,7 +7,7 @@ import (
 )
 
 // user login
-func Login(form request.LoginForm) int {
+func Login(form request.LoginRequest) int {
 	user := models.User{
 		UserName: form.LoginName,
 		Password: form.Password,

@@ -31,6 +31,13 @@ func Error(format string, args ...interface{}) {
 func Fatal(format string, args ...interface{}) {
 	Log.Fatalf(format, args)
 }
+func Panic(format string, args ...interface{}) {
+	if args == nil {
+		Log.Panic(format)
+	} else {
+		Log.Panicf(format, args)
+	}
+}
 
 func Init() {
 	Log.SetFormatter(&logrus.TextFormatter{TimestampFormat: "2021-01-01 12:30:30.999"})
@@ -46,11 +53,12 @@ func Init() {
 
 	if err != nil {
 		fmt.Println("open log file failed")
+		panic(err)
 	}
 	writers := []io.Writer{
 		f,
 		os.Stdout}
-	//同时写文件和屏幕
+	//write to console and file
 	fileAndStdoutWriter := io.MultiWriter(writers...)
 	Log.SetOutput(fileAndStdoutWriter)
 	switch setting.AppSetting.LogLevel {
