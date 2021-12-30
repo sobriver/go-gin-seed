@@ -24,11 +24,13 @@ type Server struct {
 var ServerSetting = &Server{}
 
 type Database struct {
-	Type     string
-	User     string
-	Password string
-	Host     string
-	Name     string
+	Type        string
+	User        string
+	Password    string
+	Host        string
+	Name        string
+	Timeout     time.Duration
+	MaxPoolSize uint64
 }
 
 var DatabaseSetting = &Database{}
@@ -50,6 +52,7 @@ func Init() {
 
 	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
 	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
+	DatabaseSetting.Timeout = DatabaseSetting.Timeout * time.Second
 
 }
 
